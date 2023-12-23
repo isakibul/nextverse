@@ -8,10 +8,6 @@ const AuthPage = () => {
                 <Flex justifyContent={"center"} alignItems={"center"} gap={10}>
                     <VStack spacing={4} align={"stretch"}>
                         <AuthForm />
-                        <Flex gap={5} justifyContent={"center"}>
-                            <Image cursor={"pointer"} src='/playstore.png' h={"10"} alt='playstore' />
-                            <Image cursor={"pointer"} src='/microsoft.png' h={"10"} alt='microsoft store' />
-                        </Flex>
                     </VStack>
                 </Flex>
             </Container>
