@@ -1,12 +1,17 @@
-import { Avatar, Box, Divider, Flex, Grid, GridItem, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text, VStack, useDisclosure } from "@chakra-ui/react"
+import { Avatar, Box, Button, Divider, Flex, Grid, GridItem, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text, VStack, useDisclosure } from "@chakra-ui/react"
 import Comment from "../Comment/Comment";
 import PostFooter from "../FeedPost/PostFooter"
 import { AiFillHeart } from "react-icons/ai"
 import { FaComment } from "react-icons/fa"
 import { MdDelete } from "react-icons/md";
+import useUserProfileStore from "../../store/uerProfileStore";
+import useAuthStore from "../../store/authStore"
 
-const ProfilePost = ({ img }) => {
+const ProfilePost = ({ post }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const userProfile = useUserProfileStore((state) => state.userProfile)
+    const authUser = useAuthStore((state) => state.user);
+
     return (
         <>
             <Grid
@@ -36,20 +41,20 @@ const ProfilePost = ({ img }) => {
                         <Flex>
                             <AiFillHeart size={20} />
                             <Text fontWeight={"bold"} ml={2}>
-                                7
+                                {post.likes.length}
                             </Text>
                         </Flex>
 
                         <Flex>
                             <FaComment size={20} />
                             <Text fontWeight={"bold"} ml={2}>
-                                7
+                                {post.comments.length}
                             </Text>
                         </Flex>
                     </Flex>
                 </Flex>
 
-                <Image src={img} alt='profile post' w={"100%"} h={"100%"} objectFit={"cover"} />
+                <Image src={post.imageURL} alt='profile post' w={"100%"} h={"100%"} objectFit={"cover"} />
             </Grid>
 
             <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={{ base: "3xl", md: "5xl" }}>
@@ -74,20 +79,25 @@ const ProfilePost = ({ img }) => {
                                 justifyContent={"center"}
                                 alignItems={"center"}
                             >
-                                <Image src={img} alt='profile post' />
+                                <Image src={post.imageURL} alt='profile post' />
                             </Flex>
                             <Flex flex={1} flexDir={"column"} px={10} display={{ base: "none", md: "flex" }}>
                                 <Flex alignItems={"center"} justifyContent={"space-between"}>
                                     <Flex alignItems={"center"} gap={4}>
-                                        <Avatar src="/profilepic.png" size={"sm"} name='As a Programmer' />
+                                        <Avatar src={userProfile.profilePicURL} size={"sm"} name='As a Programmer' />
                                         <Text fontWeight={"bold"} fontSize={12}>
-                                            asaprogrammer_
+                                            {userProfile.username}
                                         </Text>
                                     </Flex>
 
-                                    <Box _hover={{ bg: "whiteAlpha.300", color: "red.600" }} borderRadius={4} p={1}>
-                                        <MdDelete size={20} cursor={"pointer"} />
-                                    </Box>
+                                    {authUser?.uid === userProfile.uid && (
+                                        <Button
+                                            size={"sm"}
+                                            bg={"transparent"}
+                                            _hover={{ bg: "whiteAlpha.300", color: "red.600" }} borderRadius={4} p={1}>
+                                            <MdDelete size={20} cursor={"pointer"} />
+                                        </Button>
+                                    )}
 
                                 </Flex>
                                 <Divider my={4} bg={"gray.500"} />
