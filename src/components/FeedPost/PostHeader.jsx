@@ -1,8 +1,8 @@
-import { Avatar, Box, Button, Flex, Skeleton, SkeletonCircle } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Skeleton, SkeletonCircle } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import useFollowUser from "../../hooks/useFollowUser";
 import { timeAgo } from "../../utils/timeAgo";
-import { RiUserUnfollowFill } from "react-icons/ri";
+// import { RiUserUnfollowFill } from "react-icons/ri";
 
 const PostHeader = ({ post, creatorProfile }) => {
     const { handleFollowUser, isFollowing, isUpdating } = useFollowUser(post.createdBy);
