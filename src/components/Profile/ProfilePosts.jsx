@@ -14,6 +14,7 @@ const ProfilePosts = () => {
                 sm: "repeat(1, 1fr)",
                 md: "repeat(3, 1fr)",
             }}
+            mt={2}
             gap={1}
             columnGap={1}
         >

@@ -1,6 +1,5 @@
 import { Button, Container, Flex, Skeleton, SkeletonCircle, Text, VStack } from "@chakra-ui/react"
 import ProfileHeader from "../../components/Profile/ProfileHeader"
-import ProfileTabs from "../../components/Profile/ProfileTabs"
 import ProfilePosts from "../../components/Profile/ProfilePosts"
 import useGetUserProfileByUsername from "../../hooks/useGetUserProfileByUsername";
 import { Link as RouterLink } from "react-router-dom";
@@ -33,7 +32,19 @@ const ProfilePage = () => {
                 borderColor={"whiteAlpha.300"}
                 direction={"column"}
             >
-                <ProfileTabs />
+                <Flex
+                    w={"full"}
+                    justifyContent={"center"}
+                    gap={{ base: 4, sm: 10 }}
+                    textTransform={"uppercase"}
+                    fontWeight={"bold"}
+                >
+                    <Flex borderTop={"1px solid white"} alignItems={"center"} p='3' gap={1} cursor={"pointer"}>
+                        <Text fontSize={10}>
+                            Post History
+                        </Text>
+                    </Flex>
+                </Flex>
                 <ProfilePosts />
             </Flex>
         </Container>

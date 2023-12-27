@@ -16,7 +16,7 @@ import {
     Tooltip,
     useDisclosure,
 } from "@chakra-ui/react";
-import { CreatePostLogo } from "../../assets/constants";
+import { IoIosAddCircle } from "react-icons/io";
 import { BsFillImageFill } from "react-icons/bs";
 import { useRef, useState } from "react";
 import usePreviewImg from "../../hooks/usePreviewImg";
@@ -54,7 +54,6 @@ const CreatePost = () => {
                 hasArrow
                 label={"Create"}
                 placement='right'
-                ml={1}
                 openDelay={500}
                 display={{ base: "block", md: "none" }}
             >
@@ -68,8 +67,8 @@ const CreatePost = () => {
                     justifyContent={{ base: "center", md: "flex-start" }}
                     onClick={onOpen}
                 >
-                    <CreatePostLogo />
-                    <Box display={{ base: "none", md: "block" }}>Create</Box>
+                    <IoIosAddCircle fontSize={25} />
+                    <Box display={{ base: "none", md: "block" }}>Create Post</Box>
                 </Flex>
             </Tooltip>
 

@@ -5,6 +5,7 @@ import {
     FormControl,
     FormLabel,
     Input,
+    InputGroup,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -14,7 +15,7 @@ import {
     Tooltip,
     useDisclosure,
 } from "@chakra-ui/react";
-import { SearchLogo } from "../../assets/constants";
+import { FaSearch } from "react-icons/fa";
 import useSearchUser from "../../hooks/useSearchUser";
 import { useRef } from "react";
 import SuggestedUser from "../SuggestedUser/SuggestedUser";
@@ -49,7 +50,7 @@ const Search = () => {
                     justifyContent={{ base: "center", md: "flex-start" }}
                     onClick={onOpen}
                 >
-                    <SearchLogo />
+                    <FaSearch fontSize={25} />
                     <Box display={{ base: "none", md: "block" }}>Search</Box>
                 </Flex>
             </Tooltip>
@@ -61,16 +62,17 @@ const Search = () => {
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <form onSubmit={handleSearchUser}>
-                            <FormControl>
-                                <FormLabel>Username</FormLabel>
-                                <Input placeholder='Sakibul Islam' ref={searchRef} />
-                            </FormControl>
-
-                            <Flex w={"full"} justifyContent={"flex-end"}>
-                                <Button type='submit' ml={"auto"} size={"sm"} my={4} isLoading={isLoading}>
-                                    Search
-                                </Button>
-                            </Flex>
+                            <FormLabel>Username</FormLabel>
+                            <InputGroup mb={4}>
+                                <FormControl>
+                                    <Input ref={searchRef} />
+                                </FormControl>
+                                <Flex>
+                                    <Button type='submit' isLoading={isLoading}>
+                                        Search
+                                    </Button>
+                                </Flex>
+                            </InputGroup>
                         </form>
                         {user && <SuggestedUser user={user} setUser={setUser} />}
                     </ModalBody>

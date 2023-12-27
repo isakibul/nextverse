@@ -13,9 +13,9 @@ const Navbar = () => {
                         </Button>
                     </Link>
                     <Link to='/auth'>
-                        <Button variant={"outline"} size={"sm"}>
+                        {/* <Button variant={"outline"} size={"sm"}>
                             Signup
-                        </Button>
+                        </Button> */}
                     </Link>
                 </Flex>
             </Flex>

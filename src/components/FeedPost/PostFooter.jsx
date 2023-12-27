@@ -1,73 +1,100 @@
-import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react"
-import { useState } from "react"
+import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text, useDisclosure } from "@chakra-ui/react";
+import { useRef, useState } from "react";
+import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constants";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiFillLike } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 
+import usePostComment from "../../hooks/usePostComment";
+import useAuthStore from "../../store/authStore";
+import useLikePost from "../../hooks/useLikePost";
+import { timeAgo } from "../../utils/timeAgo";
+import CommentsModal from "../Modals/CommentsModal";
 
+const PostFooter = ({ post, isProfilePage, creatorProfile }) => {
+    const { isCommenting, handlePostComment } = usePostComment();
+    const [comment, setComment] = useState("");
+    const authUser = useAuthStore((state) => state.user);
+    const commentRef = useRef(null);
+    const { handleLikePost, isLiked, likes } = useLikePost(post);
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
-const PostFooter = ({ username, isProfilePage }) => {
-    const [liked, setLiked] = useState(false);
-    const [likes, setLikes] = useState(1000);
+    const handleSubmitComment = async () => {
+        await handlePostComment(post.id, comment);
+        setComment("");
+    };
 
-    const handleLike = () => {
-        if (liked) {
-            setLiked(false);
-            setLikes(likes - 1);
-        } else {
-            setLiked(true);
-            setLikes(likes + 1);
-        }
-    }
     return (
-        <>
-            <Flex alignItems={"center"} gap={4} w={"full"} pt={0} mb={2} mt={"auto"}>
-                <Box onClick={handleLike} cursor={"pointer"} fontSize={30}>
-                    {!liked ? <AiOutlineLike /> : <AiFillLike />}
+        <Box mb={10} marginTop={"auto"}>
+            <Flex alignItems={"center"} gap={4} w={"full"} pt={0} mb={2} mt={4}>
+                <Box onClick={handleLikePost} cursor={"pointer"} fontSize={18}>
+                    {!isLiked ? <AiOutlineLike fontSize={"2rem"} /> : <AiFillLike fontSize={"2rem"} />}
                 </Box>
-                <Box cursor={"pointer"} fontSize={22} mt={2}>
-                    <FaRegCommentAlt />
+
+                <Box cursor={"pointer"} fontSize={18} marginTop={3} onClick={() => commentRef.current.focus()}>
+                    <FaRegCommentAlt fontSize={"1.5rem"} />
                 </Box>
             </Flex>
+            <Text fontWeight={600} fontSize={"sm"}>
+                {likes} likes
+            </Text>
+
+            {isProfilePage && (
+                <Text fontSize='12' color={"gray"}>
+                    Posted {timeAgo(post.createdAt)}
+                </Text>
+            )}
 
             {!isProfilePage && (
                 <>
-                    <Text fontWeight={600} fontSize={"sm"}>
-                        {likes} like
-                    </Text>
-                    <Text fontSize={"sm"} fontWeight={700}>
-                        {username} {" "}
+                    <Text fontSize='sm' fontWeight={700}>
+                        {creatorProfile?.username}{" "}
                         <Text as='span' fontWeight={400}>
-                            Felling good
+                            {post.caption}
                         </Text>
                     </Text>
-                    <Text fontSize={"sm"} color={"gray"}>
-                        View all 1000 comments
-                    </Text>
+                    {post.comments.length > 0 && (
+                        <Text fontSize='sm' color={"gray"} cursor={"pointer"}
+                            onClick={onOpen}
+                        >
+                            View all {post.comments.length} comments
+                        </Text>
+                    )}
+                    {/* COMMENTS MODAL ONLY IN THE HOME PAGE */}
+                    {isOpen ? <CommentsModal isOpen={isOpen} onClose={onClose} post={post} /> : null}
                 </>
             )}
 
-            <Flex alignItems={"center"} gap={2} justifyContent={"space-between"} w={"full"}>
-                <InputGroup>
-                    <Input variant={"flushed"} placeholder="Add a comment" fontSize={14} />
-                    <InputRightElement>
-                        <Button
+            {authUser && (
+                <Flex alignItems={"center"} gap={2} justifyContent={"space-between"} w={"full"}>
+                    <InputGroup>
+                        <Input
+                            variant={"flushed"}
+                            placeholder={"Add a comment..."}
                             fontSize={14}
-                            fontWeight={600}
-                            color={"blue.500"}
-                            cursor={"pointer"}
-                            bg={"transparent"}
-                            _hover={{
-                                color: "white",
-                            }}
-                        >
-                            Post
-                        </Button>
-                    </InputRightElement>
-                </InputGroup>
-            </Flex>
-        </>
-    )
-}
+                            onChange={(e) => setComment(e.target.value)}
+                            value={comment}
+                            ref={commentRef}
+                        />
+                        <InputRightElement>
+                            <Button
+                                fontSize={14}
+                                color={"blue.500"}
+                                fontWeight={600}
+                                cursor={"pointer"}
+                                _hover={{ color: "white" }}
+                                bg={"transparent"}
+                                onClick={handleSubmitComment}
+                                isLoading={isCommenting}
+                            >
+                                Post
+                            </Button>
+                        </InputRightElement>
+                    </InputGroup>
+                </Flex>
+            )}
+        </Box>
+    );
+};
 
-export default PostFooter
+export default PostFooter;

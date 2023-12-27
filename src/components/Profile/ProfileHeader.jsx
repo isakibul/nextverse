@@ -81,7 +81,7 @@ const ProfileHeader = () => {
                     </Text>
                 </Flex>
                 <Flex alignItems={"center"} gap={4}>
-                    <Text fontSize={"sm"} fontWeight={"bold"}>
+                    <Text fontSize={"sm"} fontWeight={"bold"} textAlign={"center"}>
                         {userProfile.fullName}
                     </Text>
                 </Flex>

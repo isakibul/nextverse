@@ -17,7 +17,7 @@ const PageLayout = ({ children }) => {
     return (
         <Flex flexDir={renderNavbar ? "column" : "row"}>
             {renderSidebar ? (
-                <Box w={{ base: "70px", md: "240px" }}>
+                <Box w={{ base: "50px", md: "240px" }}>
                     <Sidebar />
                 </Box>
             ) : null}

@@ -1,20 +1,15 @@
 import { Box, Container, Flex, Skeleton, SkeletonCircle, Text, VStack } from "@chakra-ui/react";
-import FeedPost from "./FeedPost"
-import { useEffect, useState } from "react"
+import FeedPost from "./FeedPost";
+import useGetFeedPosts from "../../hooks/useGetFeedPosts";
 
 const FeedPosts = () => {
-    const [isLoading, setIsLoading] = useState(true);
+    const { isLoading, posts } = useGetFeedPosts();
 
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-    }, [])
     return (
-        <Container maxW={"container.sm"} py={2} px={2}>
+        <Container maxW={"container.sm"} px={2}>
             {isLoading &&
-                [0, 1, 2, 3].map((_, index) => (
-                    <VStack key={index} gap={4} alignItems={"flex-start"} mb={10}>
+                [0, 1, 2].map((_, idx) => (
+                    <VStack key={idx} gap={4} alignItems={"flex-start"} mb={10}>
                         <Flex gap='2'>
                             <SkeletonCircle size='10' />
                             <VStack gap={2} alignItems={"flex-start"}>
@@ -28,16 +23,17 @@ const FeedPosts = () => {
                     </VStack>
                 ))}
 
-            {!isLoading && (
+            {!isLoading && posts.length > 0 && posts.map((post) => <FeedPost key={post.id} post={post} />)}
+            {!isLoading && posts.length === 0 && (
                 <>
-                    <FeedPost img='/img1.png' username='natasha' avatar='/img1.png' />
-                    <FeedPost img='/img2.png' username='harry' avatar='/img2.png' />
-                    <FeedPost img='/img3.png' username='alura' avatar='/img3.png' />
-                    <FeedPost img='/img4.png' username='warner' avatar='/img4.png' />
+                    <Text fontSize={"md"} color={"red.400"}>
+                        You have have any connect. Please connect some to see their post.
+                    </Text>
+                    <Text color={"red.400"}>Stop wasting time and go make some!!</Text>
                 </>
             )}
         </Container>
-    )
-}
+    );
+};
 
-export default FeedPosts
+export default FeedPosts;

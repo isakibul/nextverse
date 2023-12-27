@@ -12,11 +12,11 @@ const Sidebar = () => {
             height={"100vh"}
             borderRight={"1px solid"}
             borderColor={"whiteAlpha.300"}
-            py={8}
+            py={6}
             position={"sticky"}
             top={0}
             left={0}
-            px={{ base: 2, md: 4 }}
+            px={{ base: 1, md: 4 }}
         >
             <Flex direction={"column"} gap={10} w='full' height={"full"}>
                 <Link to={"/"} as={RouterLink} pl={2} display={{ base: "none", md: "block" }} cursor='pointer'>
@@ -36,7 +36,7 @@ const Sidebar = () => {
                 >
                     <Image src="/mobileLogo.png" />
                 </Link>
-                <Flex direction={"column"} gap={5} cursor={"pointer"}>
+                <Flex direction={"column"} ms={{ md: 2 }} gap={5} cursor={"pointer"}>
                     <SidebarItems />
                 </Flex>
 
