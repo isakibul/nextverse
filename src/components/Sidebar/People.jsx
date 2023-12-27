@@ -26,10 +26,6 @@ const Notifications = () => {
         return null;
     }
 
-    // if (suggestedUsers.length === 0) {
-    //     return <Text>You have no user suggestions.</Text>;
-    // }
-
     return (
         <>
             <Tooltip
