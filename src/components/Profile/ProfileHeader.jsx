@@ -54,7 +54,7 @@ const ProfileHeader = () => {
                                 onClick={handleFollowUser}
                                 isLoading={isUpdating}
                             >
-                                {isFollowing ? "Disconnect" : "Connect"}
+                                {isFollowing ? "Unfollow" : "Follow"}
                             </Button>
                         </Flex>
                     )}
