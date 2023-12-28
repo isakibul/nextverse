@@ -27,7 +27,7 @@ const FeedPosts = () => {
             {!isLoading && posts.length === 0 && (
                 <>
                     <Text fontSize={"md"} color={"red.400"}>
-                        You have have any connect. Please connect some to see their post.
+                        You don't have any connect. Please connect some to see their post.
                     </Text>
                     <Text color={"red.400"}>Stop wasting time and go make some!!</Text>
                 </>

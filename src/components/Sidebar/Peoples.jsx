@@ -16,7 +16,7 @@ import { FaUserFriends } from 'react-icons/fa';
 import useGetSuggestedUser from '../../hooks/useGetSuggestedUser';
 import SuggestedUser from '../SuggestedUser/SuggestedUsers';
 
-const Notifications = () => {
+const Peoples = () => {
     const { isOpen: isModalOpen, onOpen, onClose } = useDisclosure();
     const { suggestedUsers } = useGetSuggestedUser();
 
@@ -76,4 +76,4 @@ const Notifications = () => {
     );
 };
 
-export default Notifications;
+export default Peoples;
